@@ -1,0 +1,27 @@
+{
+    "name": "paoloumali/options",
+    "description": "",
+    "authors": [
+        {
+            "name": "Paolo Umali",
+            "email": "dev@paoloumali.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "4.2.*"
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations",
+            "src/controllers"
+        ],
+        "psr-0": {
+            "Paoloumali\\Options\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "minimum-stability": "stable"
+}
