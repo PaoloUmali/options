@@ -1,6 +1,4 @@
-<?php namespace Paoloumali\Options;
-
-use Seeder, DB, Config;
+<?php
 
 class OptionsTableSeeder extends Seeder {
 
@@ -13,17 +11,19 @@ class OptionsTableSeeder extends Seeder {
 	{
 		DB::table('options')->delete();
 
-		OptionModel::create(array(
+		$repo = App::make('OptionRepo');
+
+		$repo->model()->create(array(
 			'key' => 'settings.groups', 'value' => ['tpl', 'userman'], 'title' => 'Configurable Settings'
 		));
 
 		// for paoloumali/templating
-		OptionModel::create(array(
+		$repo->model()->create(array(
 			'key' => 'tpl', 'value' => Config::get('tpl::config'), 'title' => 'Templating'
 		));
 
 		// from paoloumali/user-management
-		OptionModel::create(array(
+		$repo->model()->create(array(
 			'key' => 'userman', 'value' => Config::get('userman::config'), 'title' => 'User Management'
 		));
 	}

@@ -7,7 +7,7 @@ class Opt {
 		*/
 	protected	$repo;
 
-	public function __construct(Repositories\OptionRepository $repo)
+	public function __construct(OptionRepo $repo)
 	{
 		$this->repo = $repo;
 	}
@@ -22,7 +22,7 @@ class Opt {
 	public function getModel($primaryKey) {
 		return isset($this->cachedModels[$primaryKey]) ? 
 		$this->cachedModels[$primaryKey] : 
-		$this->cachedModels[$primaryKey] = Option::find($primaryKey);
+		$this->cachedModels[$primaryKey] = OptionModel::find($primaryKey);
 	}
 
 	public function getValue($primaryKey) {
@@ -38,26 +38,31 @@ class Opt {
 
 	public function getAllOptions()
 	{
-		return Option::all();
+		return OptionModel::all();
 	}
 
 	public function getAllSettingsGroup()
 	{
-		return Option::all();
+		return OptionModel::all();
 	}
 
 	public function getSettings($key)
 	{
-		return Option::where('key', $key)->firstOrFail();
+		return OptionModel::where('key', $key)->firstOrFail();
 	}
 
 	public function getSettingsGroup($key)
 	{
-		return Option::where('key', 'settings.group.'.$key)->firstOrFail();
+		return OptionModel::where('key', 'settings.group.'.$key)->firstOrFail();
 	}
 
 	public function getSettingsGroups()
 	{
-		return Option::where('key', 'settings.groups')->firstOrFail()->value;
+		return OptionModel::where('key', 'settings.groups')->firstOrFail()->value;
+	}
+
+	public function getConfigurableModels()
+	{
+		return $this->repo->model()->whereIn('key', $this->repo->model()->whereKey('settings.groups')->firstOrFail()->value)->get();
 	}
 }

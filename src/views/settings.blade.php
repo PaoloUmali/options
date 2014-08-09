@@ -2,10 +2,9 @@
 
 @section('#main')
 	<div	id="main" role="main">
-	@foreach(Paoloumali\Options\Option::whereIn('key', Opt::getSettingsGroups())->get() as $option)
+	@foreach($option_models as $option)
 		@include('opt::_formPanel', array(
 			'option' => $option,
-			'option_group_key' => $option->key
 		))
 	@endforeach
 	</div><!--	/#main	-->

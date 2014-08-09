@@ -11,9 +11,9 @@ class OptionModel extends Eloquent {
 	 */
 	protected $table = 'options';
 
-	protected $primaryKey = 'key';
+	protected $primaryKey = 'id';
 
-	protected $guarded = array('id', 'key');
+	protected $guarded = array('id');
 
 	// getter, always decode back to array
 	public function getValueAttribute($value)
@@ -28,5 +28,6 @@ class OptionModel extends Eloquent {
 		return $this->attributes['value'] = json_encode($value);
 		//return $this->attributes['value'] = serialize($value);
 	}
+
 
 }

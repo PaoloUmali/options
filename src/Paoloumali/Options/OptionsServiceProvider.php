@@ -45,7 +45,7 @@ class OptionsServiceProvider extends ServiceProvider {
 
 		$this->app['opt.repo'] = $this->app->share(function($app)
 		{
-			return new Repos\EloquentOptionRepo($app['opt.model']);
+			return new OptionRepo($app['opt.model']);
 		});
 	}
 

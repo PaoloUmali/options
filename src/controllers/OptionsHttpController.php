@@ -1,15 +1,19 @@
 <?php
 
-// separate the repository class
+// This should have the basics
 
-use Paoloumali\Options\Option;
+class OptionsHttpController extends \BaseController {
 
-class OptionApiController extends \BaseController {
-
+	protected $repo;
 
 	public function __construct()
 	{
 		$this->repo = App::make('opt.repo');
+	}
+
+	public function repo()
+	{
+		return $this->repo;
 	}
 
 
@@ -20,7 +24,6 @@ class OptionApiController extends \BaseController {
 	 */
 	public function index()
 	{
-		//return Option::all();
 		return $this->repo->all();
 	}
 
@@ -32,7 +35,7 @@ class OptionApiController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+		return $this->repo->model();
 	}
 
 
@@ -43,16 +46,13 @@ class OptionApiController extends \BaseController {
 	 */
 	public function store()
 	{
-		//get the inouts
-		//Input::get('option');
+		$posted_resouce = Input::only('key', 'value', 'title');
+
 		try {
-			return $option = Option::create(array(
-				'key' => 'tpl', 'value' => Config::get('tpl::config')
-			));
+			return $option = $this->repo->model()->create($posted_resouce);
 		}
 		catch (\Exception $e) {
-			//return $this->handleException($e);
-			//return $e->getMessage();
+			return $e->getMessage();
 		}
 	}
 
@@ -65,7 +65,7 @@ class OptionApiController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		return $this->repo->getByID($id);
 	}
 
 
@@ -77,7 +77,7 @@ class OptionApiController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		return $this->repo->getByID($id);
 	}
 
 
@@ -91,8 +91,8 @@ class OptionApiController extends \BaseController {
 	{
 		try
 		{
-			$option = Option::whereId($id)->firstOrFail();
-			$posted_option = Input::only('value', 'title');
+			$option = $this->repo->model()->whereId($id)->firstOrFail();
+			$posted_resource = Input::only('value', 'title');
 			$option->update($posted_option);
 			//foreach ($posted_option as $attribute => $value) $option->{$attribute} = $value;
 			$option->save();

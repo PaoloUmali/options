@@ -1,5 +1,5 @@
-{{Form::model(Opt::getModel('tpl'), [
-'route' => ['option.update', Opt::getModel('tpl')->id], 
+{{Form::model($option, [
+'route' => ['options.update', $option->id], 
 'method' => 'put', 
 'class'=>'form-horizontal'
 ])}}
@@ -22,27 +22,27 @@
 		</fieldset>
 
 		<fieldset>
-			@if(isset(Opt::getModel('tpl')->value->css_header))
+			@if(isset($option->value->css_header))
 			<legend>CSS</legend>
-				@foreach(Opt::getModel('tpl')->value->css_header as $key1 => $val1)
+				@foreach($option->value->css_header as $key1 => $val1)
 				{{Form::option_horizontal_text_group("value[css_header][$key1]", $val1, [], 'CSS File '.$key1)}}
 				@endforeach
 			@endif
 		</fieldset>
 
 		<fieldset>
-			@if(isset(Opt::getModel('tpl')->value->js_header))
+			@if(isset($option->value->js_header) && !empty($option->value->js_header))
 			<legend>JS before &lt;/head&gt;</legend>
-				@foreach(Opt::getModel('tpl')->value->js_header as $key2 => $val2)
+				@foreach($option->value->js_header as $key2 => $val2)
 				{{Form::option_horizontal_text_group("value[js_header][$key2]", $val2, [], 'JS hFile '.$key2)}}
 				@endforeach
 			@endif
 		</fieldset>
 
 		<fieldset>
-			@if(isset(Opt::getModel('tpl')->value->js_footer))
+			@if(isset($option->value->js_footer))
 			<legend>JS before &lt;/body&gt;</legend>
-				@foreach(Opt::getModel('tpl')->value->js_footer as $key3 => $val3)
+				@foreach($option->value->js_footer as $key3 => $val3)
 				{{Form::option_horizontal_text_group("value[js_footer][$key3]", $val3, [], 'JS fFile '.$key3)}}
 				@endforeach
 			@endif
