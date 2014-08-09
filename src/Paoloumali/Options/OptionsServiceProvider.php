@@ -19,6 +19,7 @@ class OptionsServiceProvider extends ServiceProvider {
 	public function boot()
 	{
 		$this->package('paoloumali/options', 'opt');
+		include __DIR__.'/../../form_macros.php';
 		include __DIR__.'/../../routes.php';
 	}
 

@@ -13,6 +13,8 @@ class Option extends Eloquent {
 
 	protected $primaryKey = 'key';
 
+	protected $guarded = array('id', 'key');
+
 	// getter, always decode back to array
 	public function getValueAttribute($value)
 	{

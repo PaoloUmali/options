@@ -17,6 +17,7 @@ class PuCreateOptionsTable extends Migration {
 			$table->bigIncrements('id');
 			$table->string('key', 64)->unique();
 			$table->text('value');
+			$table->string('title', 64);
 			$table->timestamps();
 		});
 	}

@@ -1,34 +1,59 @@
-{{Form::model(Opt::getModel('tpl'), array('route' => array('option.update', Opt::getModel('tpl')->id), 'method' => 'put'))}}
-	<ul>
-		<li>{{Form::label('id')}} {{Form::text('id', null, array('disabled'=>'disabled'))}}</li>
-		<li>{{Form::label('key')}} {{Form::text('key', null, array('disabled'=>'disabled'))}}</li>
-		<li>{{Form::label('value[img_favicon]')}} {{Form::text('value[img_favicon]')}}</li>
-		@foreach([57, 72, 114, 144] as $val0)
-		<li class="text-info">{{Form::label("value[img_ati{$val0}]")}} {{Form::text("value[img_ati{$val0}]")}}</li>
-		@endforeach
+{{Form::model(Opt::getModel('tpl'), [
+'route' => ['option.update', Opt::getModel('tpl')->id], 
+'method' => 'put', 
+'class'=>'form-horizontal'
+])}}
 
-	@if(isset(Opt::getModel('tpl')->value->css_header))
-		@foreach(Opt::getModel('tpl')->value->css_header as $key1 => $val1)
-		<li class="text-success">{{Form::label("value[css_header][$key1]")}} {{Form::text("value[css_header][$key1]", $val1)}}</li>
-		@endforeach
-	@endif
+		<fieldset>
+			<legend>Common</legend>
+			<div class="row">
+				<div class="col-xs-4">{{Form::option_horizontal_text_group('title')}}</div>
+				<div class="col-xs-4">{{Form::option_horizontal_text_group('id', null,  ['readonly'])}}</div>
+				<div class="col-xs-4">{{Form::option_horizontal_text_group('key', null,  ['readonly'])}}</div>
+			</div><!--.row-->
+		</fieldset>
 
-	@if(isset(Opt::getModel('tpl')->value->js_header))
-		@foreach(Opt::getModel('tpl')->value->js_header as $key2 => $val2)
-		<li class="text-danger">{{Form::label("value[js_header][$key2]")}} {{Form::text("value[js_header][$key2]", $val2)}}</li>
-		@endforeach
-	@endif
+		<fieldset>
+			<legend>Icons</legend>
+			{{Form::option_horizontal_text_group('value[img_favicon]', null, [], 'Favicon')}}
+			@foreach([57, 72, 114, 144] as $val0)
+			{{Form::option_horizontal_text_group("value[img_ati{$val0}]", null, [], 'Apple Icon '.$val0)}}
+			@endforeach
+		</fieldset>
 
-	@if(isset(Opt::getModel('tpl')->value->js_footer))
-		@foreach(Opt::getModel('tpl')->value->js_footer as $key3 => $val3)
-		<li class="text-warning">{{Form::label("value[js_footer][$key3]")}} {{Form::text("value[js_footer][$key3]", $val3)}}</li>
-		@endforeach
-	@endif
+		<fieldset>
+			@if(isset(Opt::getModel('tpl')->value->css_header))
+			<legend>CSS</legend>
+				@foreach(Opt::getModel('tpl')->value->css_header as $key1 => $val1)
+				{{Form::option_horizontal_text_group("value[css_header][$key1]", $val1, [], 'CSS File '.$key1)}}
+				@endforeach
+			@endif
+		</fieldset>
 
-	</ul>
-	{{Form::submit()}}
+		<fieldset>
+			@if(isset(Opt::getModel('tpl')->value->js_header))
+			<legend>JS before &lt;/head&gt;</legend>
+				@foreach(Opt::getModel('tpl')->value->js_header as $key2 => $val2)
+				{{Form::option_horizontal_text_group("value[js_header][$key2]", $val2, [], 'JS hFile '.$key2)}}
+				@endforeach
+			@endif
+		</fieldset>
+
+		<fieldset>
+			@if(isset(Opt::getModel('tpl')->value->js_footer))
+			<legend>JS before &lt;/body&gt;</legend>
+				@foreach(Opt::getModel('tpl')->value->js_footer as $key3 => $val3)
+				{{Form::option_horizontal_text_group("value[js_footer][$key3]", $val3, [], 'JS fFile '.$key3)}}
+				@endforeach
+			@endif
+		</fieldset>
+
+
+<hr>
+
+	<div class="pull-right">
+		<button class="btn btn-default">Previous</button>
+		<button class="btn btn-default">Default</button>
+	</div>
+	{{Form::submit('Submit', ['class'=>"btn btn-primary"])}}
 {{Form::close()}}
-
-<script>
-	console.log({{Opt::getValueInJson('tpl')}});
-</script>

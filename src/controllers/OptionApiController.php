@@ -4,7 +4,7 @@
 
 use Paoloumali\Options\Option;
 
-class OptionResourceController extends \BaseController {
+class OptionApiController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
@@ -84,10 +84,9 @@ class OptionResourceController extends \BaseController {
 		try
 		{
 			$option = Option::whereId($id)->firstOrFail();
-			$posted_option = Input::only('value');
-
-			//$option->update($posted_option);
-			foreach ($posted_option as $attribute => $value) $option->{$attribute} = $value;
+			$posted_option = Input::only('value', 'title');
+			$option->update($posted_option);
+			//foreach ($posted_option as $attribute => $value) $option->{$attribute} = $value;
 			$option->save();
 			return $option;
 		}

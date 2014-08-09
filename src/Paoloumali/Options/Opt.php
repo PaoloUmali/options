@@ -23,4 +23,29 @@ class Opt {
 	public function getValueInJson($primaryKey) {
 		return json_encode($this->getValue($primaryKey), JSON_PRETTY_PRINT);
 	}
+
+	public function getAllOptions()
+	{
+		return Option::all();
+	}
+
+	public function getAllSettingsGroup()
+	{
+		return Option::all();
+	}
+
+	public function getSettings($key)
+	{
+		return Option::where('key', $key)->firstOrFail();
+	}
+
+	public function getSettingsGroup($key)
+	{
+		return Option::where('key', 'settings.group.'.$key)->firstOrFail();
+	}
+
+	public function getSettingsGroups()
+	{
+		return Option::where('key', 'settings.groups')->firstOrFail()->value;
+	}
 }
