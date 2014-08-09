@@ -30,10 +30,43 @@ class OptionsServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		//
+		$this->registerServices();
+		$this->bindServices();
+		$this->setupMainService();
+	}
+
+	// allows you to changes services here
+	private function registerServices()
+	{
+		$this->app['opt.model'] = $this->app->share(function($app)
+		{
+			return new OptionModel();
+		});
+
+		$this->app['opt.repo'] = $this->app->share(function($app)
+		{
+			return new Repos\EloquentOptionRepo($app['opt.model']);
+		});
+	}
+
+	private function bindServices()
+	{
+		$this->app->bind('OptionModel', function($app)
+		{
+			return $app['opt.model'];
+		});
+
+		$this->app->bind('OptionRepo', function($app)
+		{
+			return $app['opt.repo'];
+		});
+	}
+
+	private function setupMainService()
+	{
 		$this->app['opt'] = $this->app->share(function($app)
 		{
-			return new Opt();
+			return new Opt($app['opt.repo']);
 		});
 	}
 
@@ -44,7 +77,7 @@ class OptionsServiceProvider extends ServiceProvider {
 	 */
 	public function provides()
 	{
-		return array('opt');
+		return array('opt', 'opt.model', 'opt.repo');
 	}
 
 }

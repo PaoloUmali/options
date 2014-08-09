@@ -2,7 +2,7 @@
 
 use Eloquent;
 
-class Option extends Eloquent {
+class OptionModel extends Eloquent {
 
 	/**
 	 * The database table used by the model.

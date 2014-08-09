@@ -6,6 +6,13 @@ use Paoloumali\Options\Option;
 
 class OptionApiController extends \BaseController {
 
+
+	public function __construct()
+	{
+		$this->repo = App::make('opt.repo');
+	}
+
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -13,7 +20,8 @@ class OptionApiController extends \BaseController {
 	 */
 	public function index()
 	{
-		return Option::all();
+		//return Option::all();
+		return $this->repo->all();
 	}
 
 

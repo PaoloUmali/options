@@ -2,6 +2,18 @@
 
 class Opt {
 
+	/**
+		*	@var	Model
+		*/
+	protected	$repo;
+
+	public function __construct(Repositories\OptionRepository $repo)
+	{
+		$this->repo = $repo;
+	}
+
+
+
 	// cachedModels
 	protected $cachedModels = array();
 
